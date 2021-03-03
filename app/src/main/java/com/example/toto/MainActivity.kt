@@ -19,9 +19,6 @@ class MainActivity : AppCompatActivity() {
                     .setAction("Action", null).show()
         }
 
-        val dailyNews = News("Je mange des pommes")
-        var toto="toto"
-        val titi="titi"
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

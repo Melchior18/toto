@@ -2,10 +2,12 @@ package com.example.toto.presentation.list
 
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.toto.R
 
-class PokemonAdapter(private val dataSet: Array<String>) :
+class PokemonAdapter(private var dataSet: List<Pokemon>) :
         RecyclerView.Adapter<PokemonAdapter.ViewHolder>() {
 
     /**
@@ -17,15 +19,18 @@ class PokemonAdapter(private val dataSet: Array<String>) :
 
         init {
             // Define click listener for the ViewHolder's View.
-            textView = view.findViewById(R.id.textView)
+            textView = view.findViewById(R.id.pokemon_name)
         }
     }
-
+    fun updateList(list:List<Pokemon>){
+        dataSet=list
+        notifyDataSetChanged()
+    }
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
-                .inflate(R.layout.text_row_item, viewGroup, false)
+                .inflate(R.layout.pokemon_item, viewGroup, false)
 
         return ViewHolder(view)
     }
@@ -35,7 +40,8 @@ class PokemonAdapter(private val dataSet: Array<String>) :
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.textView.text = dataSet[position]
+        val pokemon: Pokemon = dataSet[position]
+        viewHolder.textView.text = pokemon.name
     }
 
     // Return the size of your dataset (invoked by the layout manager)
