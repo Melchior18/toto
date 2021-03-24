@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.toto.R
@@ -24,7 +25,7 @@ class PokemonListFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
 
-    private val adapter = PokemonAdapter(listOf())
+    private val adapter = PokemonAdapter(listOf(), ::onClickedPokemon)
     private val layoutManager = LinearLayoutManager(context)
 
     override fun onCreateView(
@@ -65,5 +66,9 @@ class PokemonListFragment : Fragment() {
                     }
                 }
             })
+    }
+    private fun onClickedPokemon(pokemon: Pokemon){
+        findNavController().navigate(R.id.navigateToPokemonDetailFragment)
+
     }
 }
