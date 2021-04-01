@@ -9,8 +9,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.toto.R
+import com.example.toto.presentation.Singletons
 import com.example.toto.presentation.api.PokeApi
-import com.example.toto.presentation.api.PokemonResponse
+import com.example.toto.presentation.api.PokemonListResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,15 +19,12 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
+
 class PokemonListFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
 
     private val adapter = PokemonAdapter(listOf(), ::onClickedPokemon)
-    private val layoutManager = LinearLayoutManager(context)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,22 +40,23 @@ class PokemonListFragment : Fragment() {
     recyclerView= view.findViewById(R.id.pokemon_recyclerview)
 
         recyclerView.apply {
-            layoutManager = this@PokemonListFragment.layoutManager
+            layoutManager = LinearLayoutManager(context)
             adapter = this@PokemonListFragment.adapter
         }
+
+
         val retrofit = Retrofit.Builder()
             .baseUrl("https://pokeapi.co/api/v2/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val pokeApi: PokeApi = retrofit.create(PokeApi::class.java)
 
-            pokeApi.getPokemonList().enqueue(object :Callback<PokemonResponse>{
-                override fun onFailure(call: Call<PokemonResponse>, t: Throwable){
+            Singletons.pokeApi.getPokemonList().enqueue(object :Callback<PokemonListResponse>{
+                override fun onFailure(call: Call<PokemonListResponse>, t: Throwable){
                     TODO("Not yet implemented")
                 }
 
-                override fun onResponse(call: Call<PokemonResponse>,response: Response<PokemonResponse>
+                override fun onResponse(call: Call<PokemonListResponse>, response: Response<PokemonListResponse>
                 ) {
                     if(response.isSuccessful && response.body() != null){
                         val pokemonResponse = response.body()!!
