@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -51,23 +52,37 @@ class PokemonListFragment : Fragment() {
             .build()
 
 
-            Singletons.pokeApi.getPokemonList().enqueue(object :Callback<PokemonListResponse>{
-                override fun onFailure(call: Call<PokemonListResponse>, t: Throwable){
-                    TODO("Not yet implemented")
-                }
-
-                override fun onResponse(call: Call<PokemonListResponse>, response: Response<PokemonListResponse>
-                ) {
-                    if(response.isSuccessful && response.body() != null){
-                        val pokemonResponse = response.body()!!
-                        adapter.updateList(pokemonResponse.results)
-
-                    }
-                }
-            })
+        callApi()
     }
-    private fun onClickedPokemon(pokemon: Pokemon){
-        findNavController().navigate(R.id.navigateToPokemonDetailFragment)
+
+
+
+    private fun callApi() {
+        Singletons.pokeApi.getPokemonList().enqueue(object : Callback<PokemonListResponse> {
+            override fun onFailure(call: Call<PokemonListResponse>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onResponse(
+                call: Call<PokemonListResponse>, response: Response<PokemonListResponse>
+            ) {
+                if (response.isSuccessful && response.body() != null) {
+                    val pokemonResponse = response.body()!!
+                    showList(pokemonResponse.results)
+
+                }
+            }
+        })
+    }
+
+    private fun showList(pokemonList: List<Pokemon>) {
+        adapter.updateList(pokemonList)
+    }
+
+    private fun onClickedPokemon(id: Int){
+        findNavController().navigate(R.id.navigateToPokemonDetailFragment, bundleOf(
+                "pokemonid" to (id + 1)
+        ))
 
     }
 }
