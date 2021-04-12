@@ -45,7 +45,7 @@ class PokemonAdapter(private var dataSet: List<Pokemon>,val listener: ((Int) -> 
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        val pokemon: Pokemon = dataSet[position]
+        val pokemon = dataSet[position]
         viewHolder.textView.text = pokemon.name
         viewHolder.itemView.setOnClickListener {
             listener?.invoke(position)

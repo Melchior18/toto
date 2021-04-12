@@ -46,10 +46,6 @@ class PokemonListFragment : Fragment() {
         }
 
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://pokeapi.co/api/v2/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
 
 
         callApi()
@@ -68,20 +64,16 @@ class PokemonListFragment : Fragment() {
             ) {
                 if (response.isSuccessful && response.body() != null) {
                     val pokemonResponse = response.body()!!
-                    showList(pokemonResponse.results)
+                    adapter.updateList(pokemonResponse.results)
 
                 }
             }
         })
     }
 
-    private fun showList(pokemonList: List<Pokemon>) {
-        adapter.updateList(pokemonList)
-    }
-
     private fun onClickedPokemon(id: Int){
         findNavController().navigate(R.id.navigateToPokemonDetailFragment, bundleOf(
-                "pokemonid" to (id + 1)
+                "pokemonId" to (id + 1)
         ))
 
     }

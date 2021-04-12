@@ -13,7 +13,8 @@ import com.example.toto.presentation.Singletons
 import com.example.toto.presentation.api.PokemonDetailResponse
 import retrofit2.Call
 import retrofit2.Response
-import javax.security.auth.callback.Callback
+import retrofit2.Callback
+
 
 
 class PokemonDetailFragment : Fragment() {
@@ -36,9 +37,9 @@ class PokemonDetailFragment : Fragment() {
     }
 
     private fun callApi() {
-        val id = arguments?.getInt("pokemmonId") ?: -1
+        val id = arguments?.getInt("pokemonId") ?: -1
 
-        Singletons.pokeApi.getPokemonDetail(id).enqueue(object : retrofit2.Callback<PokemonDetailResponse>{
+        Singletons.pokeApi.getPokemonDetail(id).enqueue(object : Callback<PokemonDetailResponse>{
             override fun onFailure(
                 call: Call<PokemonDetailResponse>,
                 t: Throwable)

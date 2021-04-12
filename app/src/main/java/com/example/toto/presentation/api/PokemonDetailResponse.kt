@@ -1,6 +1,5 @@
 package com.example.toto.presentation.api
 
-import java.net.HttpURLConnection
 
 class PokemonDetailResponse (
     val name: String,
