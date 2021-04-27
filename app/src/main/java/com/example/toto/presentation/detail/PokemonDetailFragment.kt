@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.toto.R
 import com.example.toto.presentation.Singletons
 import com.example.toto.presentation.api.PokemonDetailResponse
@@ -22,6 +24,8 @@ class PokemonDetailFragment : Fragment() {
 
     private lateinit var textViewName: TextView
     private lateinit var textViewType: TextView
+    private lateinit var imageView: ImageView
+    private lateinit var imageShinyView: ImageView
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +38,8 @@ class PokemonDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        imageView = view.findViewById(R.id.pokemon_img)
+        imageShinyView= view.findViewById(R.id.pokemonShiny_img)
         textViewName = view.findViewById(R.id.pokemon_detail_name)
         textViewType = view.findViewById(R.id.pokemon_detail_type)
         callApi()
@@ -56,7 +62,19 @@ class PokemonDetailFragment : Fragment() {
             {
                 if(response.isSuccessful && response.body() != null){
                 textViewName.text = response.body()!!.name
-                    textViewType.text =response.body()!!.types.map { it.type.name }.joinToString()
+                textViewType.text =response.body()!!.types.map { it.type.name }.joinToString()
+
+                    Glide
+                        .with(this@PokemonDetailFragment)
+                        .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png")
+                        .centerCrop()
+                        .into(imageView)
+
+                    Glide
+                        .with(this@PokemonDetailFragment)
+                        .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/$id.png")
+                        .centerCrop()
+                        .into(imageShinyView)
             }}
 
         })
