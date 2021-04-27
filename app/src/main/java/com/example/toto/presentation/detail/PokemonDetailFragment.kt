@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.toto.R
 import com.example.toto.presentation.Singletons
 import com.example.toto.presentation.api.PokemonDetailResponse
+import com.example.toto.presentation.api.PokemonType
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Callback
@@ -20,6 +21,7 @@ import retrofit2.Callback
 class PokemonDetailFragment : Fragment() {
 
     private lateinit var textViewName: TextView
+    private lateinit var textViewType: TextView
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -33,11 +35,13 @@ class PokemonDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         textViewName = view.findViewById(R.id.pokemon_detail_name)
+        textViewType = view.findViewById(R.id.pokemon_detail_type)
         callApi()
     }
 
     private fun callApi() {
         val id = arguments?.getInt("pokemonId") ?: -1
+        val types = arguments?.getString("pokemonType") ?: -1
 
         Singletons.pokeApi.getPokemonDetail(id).enqueue(object : Callback<PokemonDetailResponse>{
             override fun onFailure(
@@ -52,11 +56,25 @@ class PokemonDetailFragment : Fragment() {
             {
                 if(response.isSuccessful && response.body() != null){
                 textViewName.text = response.body()!!.name
+                    textViewType.text =response.body()!!.types.map { it.type.name }.joinToString()
             }}
 
-
-
         })
+        /*Singletons.pokeApi.getPokemonDetail(types).enqueue(object : Callback<PokemonDetailResponse>{
+            override fun onFailure(
+                    call: Call<PokemonDetailResponse>,
+                    t: Throwable)
+            {
+            }
+
+            override fun onResponse(
+                    call: Call<PokemonDetailResponse>,
+                    response: Response<PokemonDetailResponse>)
+            {
+                if (response.isSuccessful && response.body() != null){
+                    textViewType.text = response.body()!!.types.toString()
+            }}
+        })*/
     }
 }
 

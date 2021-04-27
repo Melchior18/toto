@@ -74,7 +74,12 @@ class PokemonListFragment : Fragment() {
     private fun onClickedPokemon(id: Int){
         findNavController().navigate(R.id.navigateToPokemonDetailFragment, bundleOf(
                 "pokemonId" to (id + 1)
+                /*,"pokemonType" (id +1)*/
         ))
+
+        /*findNavController().navigate(R.id.navigateToPokemonDetailFragment, bundleOf(
+                "pokemonType" to (id +1)
+        ))*/
 
     }
 }

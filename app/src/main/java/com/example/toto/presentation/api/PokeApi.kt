@@ -10,4 +10,8 @@ interface PokeApi {
 
     @GET("pokemon/{id}")
     fun getPokemonDetail(@Path("id") id: Int): Call<PokemonDetailResponse>
+    /*
+    @GET("pokemon/{id}/types/slot/{type}")
+    fun getPokemonType(@Path ("type") type: String): Call<PokemonDetailResponse>
+     */
 }
