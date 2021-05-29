@@ -46,11 +46,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Bulbizarre"
-        android:textColor="@color/black"
         android:textSize="40dp"
         app:layout_constraintVertical_bias="0.4"
         app:layout_constraintTop_toBottomOf="@+id/pokemon_detail_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
                 />
+    <Button
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BACK"
+        app:layout_constraintTop_toBottomOf="@+id/pokemon_detail_type"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
