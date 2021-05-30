@@ -30,6 +30,7 @@ class PokemonDetailFragment : Fragment() {
     private lateinit var textViewWeight: TextView
     private lateinit var imageView: ImageView
     private lateinit var imageShinyView: ImageView
+    private lateinit var ButtonBack: Button
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +47,7 @@ class PokemonDetailFragment : Fragment() {
         imageShinyView= view.findViewById(R.id.pokemonShiny_img)
         textViewName = view.findViewById(R.id.pokemon_detail_name)
         textViewType = view.findViewById(R.id.pokemon_detail_type)
+        ButtonBack = view?.findViewById(R.id.btn_back) as Button
         // textViewWeight = view.findViewById(R.id.pokemon_detail_weight)
         callApi()
     }
@@ -85,17 +87,15 @@ class PokemonDetailFragment : Fragment() {
             }}
 
         })
-        fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
-
-            // get reference to button
-            val btn_back = view?.findViewById(R.id.btn_back) as Button
-            // set on-click listener
-            btn_back.setOnClickListener {
-                // your code to perform when the user clicks on the button
-                findNavController().navigate(R.id.navigateToPokemonListFragment, bundleOf())
-            }
+                    // get reference to button
+        ButtonBack.setOnClickListener {
+            // your code to perform when the user clicks on the button
+            findNavController().navigate(R.id.navigateToPokemonListFragment, bundleOf())
         }
+        }
+
+    // set on-click listener
+
         /*Singletons.pokeApi.getPokemonDetail(types).enqueue(object : Callback<PokemonDetailResponse>{
             override fun onFailure(
                     call: Call<PokemonDetailResponse>,
@@ -112,5 +112,5 @@ class PokemonDetailFragment : Fragment() {
             }}
         })*/
     }
-}
+
 
